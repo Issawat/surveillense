@@ -2,6 +2,7 @@ FROM python:3.13-rc-alpine
 
 RUN mkdir /project
 WORKDIR /project
+RUN mkdir /images
 
 COPY . .
 

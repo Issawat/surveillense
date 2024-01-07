@@ -12,7 +12,8 @@ services:
       - 3000:8000
     volumes:
       - ./backend:/project
+      - ./path/to/images:/project/images
     environment:
-      - IMAGE_DIR=/foo/bar
+      - IMAGE_DIR=images
       - ON_SITE_HOST=192.168.99.99
       - ON_SITE_PORT=1010
