@@ -47,7 +47,7 @@ async def get_frames_metadata(date: str, ch: str):
     if image_base_path.exists():
         file_timestamp_list = [x.split("_")[2] for x in os.listdir(image_base_path) if f'ch{ch}_{reformat_date}' in x]
     
-    return Response(json.dumps({"timestamps": file_timestamp_list, "ch": ch, "date": date}), 200)
+    return Response(json.dumps({"timestamps": file_timestamp_list, "total": len(file_timestamp_list), "ch": ch, "date": date}), 200)
 
 @app.post("/frames")
 async def get_frames(timestampReq: TimestampReq):
