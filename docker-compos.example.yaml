@@ -13,4 +13,6 @@ services:
     volumes:
       - ./backend:/project
     environment:
-      - IMAGE_DIR=/home/issawat/hdd/cctv-images/192.168.0.100
+      - IMAGE_DIR=/foo/bar
+      - ON_SITE_HOST=192.168.99.99
+      - ON_SITE_PORT=1010
