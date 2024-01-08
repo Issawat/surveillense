@@ -46,14 +46,15 @@ async def get_frames_metadata(date: str, ch: str):
     
     if image_base_path.exists():
         file_timestamp_list = [x.split("_")[2] for x in os.listdir(image_base_path) if f'ch{ch}_{reformat_date}' in x]
-    
+        file_timestamp_list.sort()
+        
     return Response(json.dumps({"timestamps": file_timestamp_list, "total": len(file_timestamp_list), "ch": ch, "date": date}), 200)
 
 @app.post("/frames")
 async def get_frames(timestampReq: TimestampReq):
     image_b64_list = []
     
-    if(len(timestampReq.timestamps) > 20):
+    if(len(timestampReq.timestamps) > 50):
         return Response(json.dumps({"error": "too many frames requested"}), 400)
     
     for timestamp in timestampReq.timestamps:
