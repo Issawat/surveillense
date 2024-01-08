@@ -1,20 +1,27 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
-const sampleData = ref({})
+const HOST = 'http://localhost:3000'
+const CHANNELS = ['1', '2', '3', '4', '5', '6', '7', '8']
+const records = ref([])
 
-const getSampleData = async () => {
-  const response = await fetch('http://localhost:3000/ups')
-  sampleData.value = await response.json()
+const getRecords = async () => {
+  const response = await fetch(`${HOST}/records`)
+  records.value = (await response.json())?.records ?? []
 }
 
 onMounted(() => {
-  getSampleData()
+  getRecords()
 })
 
 </script>
 
 <template>
   <main>
-    {{ sampleData }}
+    <div v-for="recordDate in records" :key="recordDate">
+      <RouterLink v-for="ch in CHANNELS" :key="ch" :to="`/viewer?date=${recordDate}&ch=${ch}`" target="_blank">
+        {{ recordDate }} CH{{ ch }}
+      </RouterLink>
+    </div>
   </main>
 </template>
