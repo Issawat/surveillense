@@ -1,0 +1,24 @@
+# Installation
+> `npm install --save @types/chunk`
+
+# Summary
+This package contains type definitions for chunk (https://github.com/ryancole/chunk).
+
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/chunk.
+## [index.d.ts](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/chunk/index.d.ts)
+````ts
+export as namespace chunk;
+
+declare function chunk<T>(array: ArrayLike<T>, size?: number): T[][];
+
+export = chunk;
+
+````
+
+### Additional Details
+ * Last updated: Mon, 06 Nov 2023 22:41:05 GMT
+ * Dependencies: none
+
+# Credits
+These definitions were written by [Florian Keller](https://github.com/ffflorian).

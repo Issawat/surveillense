@@ -39,6 +39,7 @@ async def get_records():
 
 @app.get("/frames-metadata")
 async def get_frames_metadata(date: str, ch: str):
+    #Add path whitelisting for security
     image_base_path = Path(f"{base_path}/{date}")
     file_timestamp_list = []
     
@@ -58,6 +59,7 @@ async def get_frames(timestampReq: TimestampReq):
         return Response(json.dumps({"error": "too many frames requested"}), 400)
     
     for timestamp in timestampReq.timestamps:
+        #Add path whitelisting for security
         image_path = Path(f"{base_path}/{timestampReq.date}/XVR_ch{timestampReq.ch}_{timestamp}_E.jpg")
         if image_path.exists():
             with open(image_path, "rb") as image_file:

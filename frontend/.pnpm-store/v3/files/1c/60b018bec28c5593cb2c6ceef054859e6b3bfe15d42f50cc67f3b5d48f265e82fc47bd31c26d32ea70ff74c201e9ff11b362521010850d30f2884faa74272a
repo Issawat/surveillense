@@ -1,0 +1,25 @@
+{
+    "name": "@types/chunk",
+    "version": "0.0.2",
+    "description": "TypeScript definitions for chunk",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/chunk",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Florian Keller",
+            "githubUsername": "ffflorian",
+            "url": "https://github.com/ffflorian"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/chunk"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "19bbe6121bc836bf2878bf2d2dcd264d0ef0b5381b2ed45b051c5f8b202c30b0",
+    "typeScriptVersion": "4.5"
+}
