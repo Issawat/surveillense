@@ -14,10 +14,12 @@ class TimestampReq(BaseModel):
 app = FastAPI()
 
 base_path = os.environ["IMAGE_DIR"]
+allowed_origin = os.environ["ALLOWED_ORIGIN"]
 
 origins = [
     "http://localhost",
     "http://localhost:3001",
+    allowed_origin
 ]
 
 app.add_middleware(

@@ -16,3 +16,4 @@ services:
       - IMAGE_DIR=images
       - ON_SITE_HOST=192.168.99.99
       - ON_SITE_PORT=1010
+      - ALLOWED_HOST=test.net
