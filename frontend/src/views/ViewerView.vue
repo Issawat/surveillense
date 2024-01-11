@@ -15,7 +15,7 @@ type Player = {
 }
 
 const BATCH_SIZE = 50
-const HOST = 'http://localhost:3000'
+const HOST = `http://${window.location.hostname}:3000`
 
 const { query } = useRoute()
 

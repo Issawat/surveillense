@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
-const HOST = 'http://localhost:3000'
+const HOST = `http://${window.location.hostname}:3000`
 const CHANNELS = ['1', '2', '3', '4', '5', '6', '7', '8']
 const records = ref([])
 
