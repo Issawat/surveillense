@@ -50,7 +50,7 @@ async def get_records():
             
             records.sort(key=lambda x: x["date"], reverse=True)
             
-    return Response(json.dumps({"records": recordData}), 200)
+    return Response(json.dumps({"records": records}), 200)
 
 
 @app.get("/frames-metadata")
