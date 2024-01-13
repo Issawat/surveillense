@@ -5,6 +5,7 @@ import base64
 import os
 import json
 from pydantic import BaseModel
+import glob
 
 class TimestampReq(BaseModel):
     timestamps: list[str]
@@ -35,8 +36,21 @@ async def get_records():
     records = []
     for record in os.listdir(base_path):
         if os.path.isdir(f"{base_path}/{record}"):
-            records.append(record)
-    return Response(json.dumps({"records": records}), 200)
+            availableChannels = []
+            
+            for channel in range(1, 9):
+                if len(glob.glob(f'{base_path}/{record}/XVR_ch{channel}*.jpg')) > 0:
+                    availableChannels.append(channel)
+            
+            recordData = {
+                "date": record,
+                "availableChannels": availableChannels
+            }
+            records.append(recordData)
+            
+            records.sort(key=lambda x: x["date"], reverse=True)
+            
+    return Response(json.dumps({"records": recordData}), 200)
 
 
 @app.get("/frames-metadata")

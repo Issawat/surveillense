@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
+import { Fetcher } from '../utils/fetcher'
+
 import { ref, onMounted, type Ref } from 'vue'
 import chunk from 'chunk'
 
@@ -15,11 +17,11 @@ type Player = {
 }
 
 const BATCH_SIZE = 50
-const HOST = `http://${window.location.hostname}:3000`
+const fetcher = Fetcher(import.meta.env.VITE_API_HOST || "")
 
 const { query } = useRoute()
 
-const playerInterval = ref(0)
+const playerInterval: Ref = ref(0)
 
 const player: Ref<Player> = ref({
   currentFrame: 0
@@ -36,27 +38,21 @@ const images: Ref<string[]> = ref([])
 
 
 const getMetadata = async () => {
-  const response = await fetch(`${HOST}/frames-metadata?date=${query.date}&ch=${query.ch}`)
-  metadata.value = (await response.json()) ?? {}
+  const res = await fetcher.get<Metadata>(`frames-metadata?date=${query.date}&ch=${query.ch}`)
+  metadata.value = res
 }
 
 const createImageFetcher = () => {
   const timestampChunks = chunk(metadata.value.timestamps, BATCH_SIZE)
 
   const fetchers = timestampChunks.map((timestampChunk) => async () => {
-    console.log('fetching', timestampChunk)
-    const res = await fetch(`${HOST}/frames`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        date: query.date,
-        ch: query.ch,
-        timestamps: timestampChunk
-      })
+    const res = await fetcher.post<{ images: string[] }>('frames', {
+      date: query.date,
+      ch: query.ch,
+      timestamps: timestampChunk
     })
-    const base64images = (await res.json())?.images ?? []
+
+    const base64images = res?.images ?? []
     images.value = [...images.value, ...base64images]
   })
 
@@ -72,7 +68,7 @@ const loadImages = async () => {
 
 const play = () => {
   playerInterval.value = setInterval(() => {
-    if(player.value.currentFrame === metadata.value.total - 1) {
+    if (player.value.currentFrame === metadata.value.total - 1) {
       player.value.currentFrame = 0
     }
     player.value.currentFrame++
@@ -99,7 +95,8 @@ onMounted(async () => {
   <div>
     <img :src="`data:image/jpeg;base64,${images[player.currentFrame]}`" width="800" height="600" />
     <div>
-      <input type="range" min="0" :max="metadata.total - 1" step="1" v-model="player.currentFrame" @click.capture="pause"/>
+      <input type="range" min="0" :max="metadata.total - 1" step="1" v-model="player.currentFrame"
+        @click.capture="pause" />
       <button @click="play">Play</button>
       <button @click="pause">Pause</button>
       <button @click="stop">Stop</button>
