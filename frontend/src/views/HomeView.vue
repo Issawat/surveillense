@@ -3,18 +3,22 @@ import { RouterLink } from 'vue-router'
 import { Fetcher } from '../utils/fetcher'
 import { ref, onMounted, type Ref } from 'vue'
 
-type RecordData = {
+type RecordEntry = {
   date: string
   availableChannels: number[]
 }
 
-const records: Ref<RecordData[]> = ref([])
+type RecordData = {
+  records: RecordEntry[]
+}
+
+const records: Ref<RecordEntry[]> = ref([])
 
 const fetcher = Fetcher(import.meta.env.VITE_API_HOST || "")
 
 const getRecords = async () => {
-  const recordData = await fetcher.get<RecordData[]>('records')
-  records.value = recordData
+  const recordData = await fetcher.get<RecordData>('records')
+  records.value = recordData.records
 }
 
 onMounted(() => {
