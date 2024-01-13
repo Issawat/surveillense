@@ -6,9 +6,7 @@ services:
     volumes:
       - ./frontend:/project
   backend:
-    build:
-      context: backend
-      dockerfile: Dockerfile.prod
+    build: backend
     ports:
       - 3000:8000
     volumes:
